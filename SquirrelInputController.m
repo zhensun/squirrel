@@ -68,7 +68,10 @@
           release_mask = modifiers & OSX_COMMAND_MASK ? 0 : kReleaseMask;
           RimeProcessKey(_session, XK_Super_L, rime_modifiers | release_mask);
         }
-        [self rimeUpdate];
+//          Do not call rimUpdate while in BBEdit and MS Word to avoid replacing selection (?with @""). by Zhen Sun, 6/6/12
+        if (![[sender bundleIdentifier] isEqualToString:@"com.barebones.bbedit"]&&
+          ![[sender bundleIdentifier] isEqualToString:@"com.microsoft.Word"])
+          [self rimeUpdate];
       }
       break;
     case NSKeyDown:
